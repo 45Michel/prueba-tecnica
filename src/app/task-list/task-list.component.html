@@ -1,0 +1,278 @@
+<app-nav/>
+<div class="card flex justify-content-start mt-7">
+    <p-accordion [activeIndex]="0">
+        <!--accordion of pending tasks-->
+        <p-accordionTab header="pending tasks">
+            <ul>
+                <!--scroll through the list-->
+                @for(task of tasks; track tasks){
+                    <div class="border-round p-5">
+                        <li>Name task: {{task.nameTask}}</li>
+                            <p-button 
+                            [text]="true" 
+                            icon="pi pi-trash" 
+                            severity="danger" 
+                            (click)="DeleteTask(task)" 
+                            /> 
+                            <p-button 
+                            [text]="true"
+                            icon="pi pi-pen-to-square" 
+                            severity="success" 
+                            (onClick)="showDialog(task)"
+                            />
+                            <p-button [text]="true" 
+                            icon="pi pi-stop-circle" 
+                            label="Progress"  
+                            severity="help" 
+                            (click)="Progress(task)"
+                            />
+                            <p-button 
+                            [text]="true" 
+                            icon="pi pi-stop-circle" 
+                            label="Complete"  
+                            severity="success" 
+                            (click)="Complete(task)"
+                            />
+                            <p-button 
+                            [text]="true" 
+                            icon="pi pi-address-book" 
+                            label="details" 
+                            severity="info" 
+                            (onClick)="Details(task)"
+                            />
+                    </div>
+                }<!--end  scroll through the list-->
+            </ul>
+        </p-accordionTab>
+        <!--end <accordion of pending tasks -->
+        <!--task in progress accordion-->
+        <p-accordionTab header="Progress">
+            <ul>
+                <!--scroll through the list-->
+                @for(task of progreso; track progreso){
+                    <div class="border-round p-5">
+                        <li>Name task: {{task.nameTask}}</li>
+                            <p-button 
+                            [text]="true" 
+                            icon="pi pi-trash" 
+                            severity="danger" 
+                            (click)="DeleteTask(task, true)"
+                            /> 
+                            <p-button 
+                            [text]="true" 
+                            icon="pi pi-pen-to-square" 
+                            severity="success" 
+                            (onClick)="showDialog3(task)"
+                            />
+                            <p-button 
+                            [text]="true" 
+                            icon="pi pi-stop-circle" 
+                            label="Complete"  
+                            severity="success" 
+                            (click)="Complete(task)"
+                            />
+                            <p-button 
+                            [text]="true" 
+                            icon="pi pi-address-book" 
+                            label="details" severity="info" 
+                            (onClick)="Details(task)"
+                            />
+                           
+                    </div>
+                }<!--end scroll through the list-->
+            </ul>
+        </p-accordionTab>
+        <!--end task in progress accordion-->
+        <!--accordion for completed tasks-->
+        <p-accordionTab header="Complete">
+            <ul>
+                <!--scroll through the list-->
+                @for(task of complete; track complete){
+                    <div class="border-round p-5">
+                        <li>Name task: {{task.nameTask}}</li>
+                            <p-button [text]="true" 
+                            icon="pi pi-trash" 
+                            severity="danger" 
+                            (click)="DeleteTask(task, false, true)" /> 
+                            <p-button [text]="true" 
+                            icon="pi pi-address-book" 
+                            label="details" 
+                            severity="info" 
+                            (onClick)="Details(task)"
+                            />
+
+                    </div>
+                }
+                <!--end accordion for completed tasks-->
+            </ul>
+        </p-accordionTab>
+    </p-accordion>
+</div>
+<!--update screen-->
+<div class="card flex justify-content-center">
+    <p-dialog 
+        header="Update task" 
+        [(visible)]="visible" 
+        [modal]="true" 
+        [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" 
+        [style]="{ width: '30vw', height: '35rem'}" 
+        [draggable]="false" 
+        [resizable]="false"
+        severity="contrast">
+        <div class="flex align-items-start gap-3 mt-5 flex-column">
+            <input
+             id="username" 
+             class="flex-auto border-transparent text-lg" 
+             autocomplete="off" 
+             placeholder="Task name" 
+             [(ngModel)]="nameTask"  
+             />
+        </div>
+        <div class="flex justify-content-start gap-3 mt-5 flex-columns">
+            <textarea 
+                rows="12"
+                cols="100"
+                pInputTextarea 
+                [(ngModel)]="description"
+                class="border-transparent text-lg border-round"
+                placeholder="Descripcion">
+            </textarea>
+        </div>
+        <div class="flex align-items-start gap-3 mt-7 flex-column">
+            <label 
+            or="username" 
+            class="font-semibold  text-lg">
+            Expiration date
+            </label>
+            <p-calendar 
+                [(ngModel)]="dates" 
+                selectionMode="multiple" 
+                [readonlyInput]="true"
+                 />
+        </div> 
+        <div class="card flex justify-content-end mt-3">
+            <p-button 
+            label="Update task" 
+            [raised]="true" 
+            severity="contrast" 
+            (click)="updateTask($event)" 
+            (onClick)="visible = false"
+            />
+        </div>
+    </p-dialog>
+</div>
+
+<div class="card flex justify-content-center">
+    <p-dialog 
+        header="Details" 
+        [(visible)]="details" 
+        [modal]="true" 
+        [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" 
+        [style]="{ width: '30vw', height: '35rem'}" 
+        [draggable]="false" 
+        [resizable]="false"
+        severity="contrast"
+        >
+        <div class="flex align-items-start gap-3 mt-5 flex-column">
+            <label for="username" class="font-semibold  text-lg">Name task</label>
+            <input 
+            id="username" 
+            class="flex-auto border-transparent text-lg" 
+            autocomplete="off" 
+            placeholder="Task name" 
+            [(ngModel)]="nameTask" 
+            [disabled]="true"
+            />
+        </div>
+        <div class="flex justify-content-start gap-3 mt-5 flex-column">
+            <label for="username" class="font-semibold  text-lg">Description</label>
+            <textarea 
+                rows="12"
+                cols="100"
+                pInputTextarea 
+                [(ngModel)]="description"
+                class="border-transparent text-lg border-round"
+                placeholder="Descripcion"
+                [disabled]="true">
+            </textarea>
+        </div>
+        <div class="flex align-items-start gap-3 mt-7 flex-column">
+            <label 
+            for="username" 
+            class="font-semibold  text-lg">
+            Expiration date
+            </label>
+            <p-calendar 
+                [(ngModel)]="dates" 
+                selectionMode="multiple" 
+                [readonlyInput]="true"
+                [disabled]="true"
+                 />
+        </div> 
+        <div class="card flex justify-content-end mt-3">
+            <p-button 
+            label="Close" 
+            [raised]="true" 
+            severity="contrast" 
+            (onClick)="details = false"
+            />
+        </div>
+    </p-dialog>
+</div>
+
+<!--update screen-->
+<div class="card flex justify-content-center">
+    <p-dialog 
+        header="Update task" 
+        [(visible)]="visible3" 
+        [modal]="true" 
+        [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" 
+        [style]="{ width: '30vw', height: '35rem'}" 
+        [draggable]="false" 
+        [resizable]="false"
+        severity="contrast">
+        <div class="flex align-items-start gap-3 mt-5 flex-column">
+            <input
+             id="username" 
+             class="flex-auto border-transparent text-lg" 
+             autocomplete="off" 
+             placeholder="Task name" 
+             [(ngModel)]="nameTask"  
+             />
+        </div>
+        <div class="flex justify-content-start gap-3 mt-5 flex-columns">
+            <textarea 
+                rows="12"
+                cols="100"
+                pInputTextarea 
+                [(ngModel)]="description"
+                class="border-transparent text-lg border-round"
+                placeholder="Descripcion">
+            </textarea>
+        </div>
+        <div class="flex align-items-start gap-3 mt-7 flex-column">
+            <label 
+            or="username" 
+            class="font-semibold  text-lg">
+            Expiration date
+            </label>
+            <p-calendar 
+                [(ngModel)]="dates" 
+                selectionMode="multiple" 
+                [readonlyInput]="true"
+                 />
+        </div> 
+        <div class="card flex justify-content-end mt-3">
+            <p-button 
+            label="Update task" 
+            [raised]="true" 
+            severity="contrast" 
+            (click)="updateProgress($event)" 
+            (onClick)="visible3 = false"
+            />
+        </div>
+    </p-dialog>
+</div>
+
+<app-create-task></app-create-task>
+

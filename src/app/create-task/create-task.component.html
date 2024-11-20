@@ -1,0 +1,65 @@
+<div class="card flex justify-content-center mt-7">
+    <!--button to create the task-->
+    <p-button (onClick)="showDialog()" label="Create task" severity="info" [raised]="true"/>
+    <!--dialog to show the form to create tasks-->
+    <p-dialog 
+        header="Task" 
+        [(visible)]="visible" 
+        [modal]="true" 
+        [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" 
+        [style]="{ width: '30vw', height: '35rem'}" 
+        [draggable]="false" 
+        [resizable]="false"
+        severity="contrast">
+        <div class="flex align-items-start gap-3 mt-5 flex-column">
+            <input 
+            pInputText id="username" 
+            class="flex-auto border-transparent text-lg" 
+            autocomplete="off" 
+            placeholder="Task name" 
+            [(ngModel)]="nameTask" 
+            />
+        </div>
+        <div class="flex justify-content-start gap-3 mt-5 flex-columns">
+            <textarea 
+                rows="12"
+                cols="100"
+                pInputTextarea 
+                [(ngModel)]="description"
+                class="border-transparent text-lg border-round"
+                placeholder="Descripcion">
+               
+            </textarea>
+        </div>
+        <div class="flex align-items-start gap-3 mt-7 flex-column">
+            <label 
+            for="username" 
+            class="font-semibold  text-lg">
+            Expiration date
+            </label>
+            <p-calendar 
+                [(ngModel)]="dates" 
+                selectionMode="multiple" 
+                [readonlyInput]="true"
+                 />
+        </div> 
+        
+        <div class="card flex justify-content-end mt-3">
+            <p-button
+             label="Close" 
+             [raised]="true" 
+             severity="contrast" 
+             (click)="close()" 
+             (onClick)="visible = false"
+             />
+             <p-button
+             class="ml-2"
+             label="Create task" 
+             [raised]="true" 
+             severity="contrast" 
+             (click)="creates($event)" 
+             (onClick)="visible = false"
+             />
+        </div>    
+    </p-dialog>
+</div>

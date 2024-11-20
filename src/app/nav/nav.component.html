@@ -1,0 +1,17 @@
+<div class="card">
+    <p-tabMenu [model]="items" class="nav" severity="contrast" styleClass=" shadow-2">
+        <ng-template pTemplate="item" class="nav" let-item>
+            <ng-container >
+                <a [routerLink]="item.route" class="p-menuitem-link">
+                    <span [class]="item.icon"></span>
+                    <span class="ml-2">
+                        {{ item.label }}
+                    </span>
+                </a>
+            </ng-container>
+        </ng-template>
+        <div class="card flex justify-content-center">
+            <p-inputSwitch [(ngModel)]="checked" />
+        </div>
+    </p-tabMenu>
+</div>

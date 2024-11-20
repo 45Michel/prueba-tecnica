@@ -1,0 +1,65 @@
+<app-nav/>
+<!--card pending-->
+<div class="flex flex-column md:flex-row">
+    <h3 class="flex-column justify-content-center align-items-center">Pending </h3>
+    <ul>
+        @for(task of tasks; track tasks){
+            
+            <div class="overflow-hidden">
+                <div class="flex">
+                    <div class="flex-1 md:flex-none flex align-items-center justify-content-center hover:surface-700 border-500 hover:border-surface-900 border-3 font-bold m-2 px-5 py-3 border-round">
+                        <li class=" justify-content-center list-none mb-3">{{task.nameTask}}</li>
+                        <li class="mt-6 justify-content-center list-none">Description: {{task.description}}</li>
+                    </div>
+                </div>
+            </div>  
+         }
+         <div class="justify-content-center">
+            <app-create-task/>
+        </div>
+    </ul>
+</div>
+<!--end card pending-->
+<!--card progress-->
+<div class="flex flex-column md:flex-row">
+    <h3 class="flex-column justify-content-center align-items-center">Progress</h3>
+    <ul>
+        @for(task of progreso; track progreso){
+            
+            <div class="overflow-hidden">
+                <div class="flex">
+                    <div class="flex-1 md:flex-none flex align-items-center justify-content-center border-500 hover:bg-yellow-300 hover:bg-blue-100 hover:border-surface-900 border-3 font-bold m-2 px-5 py-3 border-round">
+                        <li class=" justify-content-center list-none mb-3">{{task.nameTask}}</li>
+                        <li class="mt-6 justify-content-center list-none">Description: {{task.description}}</li>
+                    </div>
+                </div>
+            </div>
+         }
+         <div class="justify-content-center">
+            <app-create-task/>
+        </div>
+    </ul>  
+</div>
+<!--end card progress-->
+<!--cad completed-->
+<div class="flex flex-column md:flex-row">
+    <h3 class="flex-column justify-content-center align-items-center">Completed</h3>
+    <ul>
+        @for(task of complete; track complete){
+            
+            <div class="overflow-hidden">
+                <div class="flex">
+                    <div class="flex-1 md:flex-none flex align-items-center justify-content-center border-500 hover:bg-teal-100 hover:border-surface-900 border-3 font-bold m-2 px-5 py-3 border-round">
+                        <li class=" justify-content-center list-none mb-3">{{task.nameTask}}</li>
+                        <li class="mt-6 justify-content-center list-none">Description: {{task.description}}</li>
+                    </div>
+                </div>
+            </div>
+         }
+         <div class="justify-content-center">
+            <app-create-task/>
+        </div>
+    </ul>
+</div>
+<!--end card completed-->
+
